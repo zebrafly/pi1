@@ -26,7 +26,7 @@ int pi1_close()
 
 
 //the pi1_keygen algorithm: generating the evaluation key and public verification key of the scheme
-int pi1_keygen(vc_k *vck, fq_mat_t F, lhe_par *par)
+int pi1_keygen(vc_k *vck,const fq_mat_t F, lhe_par *par)
 {
    fq_mat_init(vck->F,vck->m,vck->d,par->ctx);
    fq_mat_set(vck->F,F,par->ctx);
@@ -85,7 +85,7 @@ int pi1_keygen(vc_k *vck, fq_mat_t F, lhe_par *par)
 
 
 //generate a random matrix over fq
-int fq_mat_randz(fq_mat_t F, int m, int d, lhe_par *par)
+int fq_mat_randz(fq_mat_t F, const int m, const int d, lhe_par *par)
 {
    bn_t zb;
    bn_new(zb);
@@ -110,7 +110,7 @@ int fq_mat_randz(fq_mat_t F, int m, int d, lhe_par *par)
    return 0;
 }
 
-int pi1_eval(fq_t c, bn_t *C, fq_t *LL, int d, lhe_par *par)
+int pi1_eval(fq_t c, bn_t *C, const fq_t *LL, const int d, lhe_par *par)
 {
 
     fq_mat_t X;
@@ -181,7 +181,7 @@ int pi1_eval(fq_t c, bn_t *C, fq_t *LL, int d, lhe_par *par)
 
 
 //the pi1_comp algorithm
-int pi1_comp(fq_t *nv, vc_k *vck, vc_p *vcp, lhe_par *par)
+int pi1_comp(fq_t *nv, const vc_k *vck, const vc_p *vcp, lhe_par *par)
 {
   fq_t *L=malloc(sizeof(fq_t)*vck->d);
   for (int j=0;j<vck->d;j++)
@@ -205,7 +205,7 @@ int pi1_comp(fq_t *nv, vc_k *vck, vc_p *vcp, lhe_par *par)
 }
 
 //the pi1_vrfy algorithm
-int pi1_vrfy(vc_k *vck, vc_p *vcp, fq_t *nv, lhe_par *par)
+int pi1_vrfy(const vc_k *vck, const vc_p *vcp,fq_t *nv, lhe_par *par)
 {
   int flag=-1;
   g1_t left;
